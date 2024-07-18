@@ -14,7 +14,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.security.NoSuchAlgorithmException;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -23,16 +22,14 @@ public class ClientService {
     @Autowired
     private ClientRepository clientRepository;
 
+    public ClientService(ClientRepository clientRepository) {
+        this.clientRepository = clientRepository;
+    }
+
     private void copyDtoToEntity(ClientRequest response, Client entity) {
         entity.setUserDocument(response.getUserDocument());
         entity.setCreditCardToken(response.getCreditCardToken());
         entity.setResultValue(response.getResultValue());
-    }
-
-    public ClientResponse findById(Long id) {
-        Client client = clientRepository.findById(id).orElseThrow(
-                () -> new ResourceNotFoundException("Resource not found!"));
-        return new ClientResponse(client);
     }
 
     public Page<ClientResponse> findAll(Pageable pageable) {
@@ -68,16 +65,6 @@ public class ClientService {
         } catch (EntityNotFoundException e) {
             throw new ResourceNotFoundException("Resource not found!");
         }
-    }
-
-    public ClientResponse recoverUser(Long id) {
-        Client client = clientRepository.getReferenceById(id);
-
-        if (client != null) {
-            client.setUserDocument(CryptographyService.decrypt(client.getUserDocument()));
-            client.setCreditCardToken(CryptographyService.decrypt(client.getCreditCardToken()));
-        }
-        return new ClientResponse(client);
     }
 
     public void delete(Long id) {

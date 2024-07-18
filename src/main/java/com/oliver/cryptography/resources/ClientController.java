@@ -20,12 +20,6 @@ public class ClientController {
     @Autowired
     private ClientService service;
 
-    @GetMapping(value = "/{id}")
-    public ResponseEntity<ClientResponse> findById(@PathVariable Long id) {
-        ClientResponse dto = service.findById(id);
-        return ResponseEntity.ok(dto);
-    }
-
     @GetMapping
     public ResponseEntity<Page<ClientResponse>> findAll(Pageable pageable) {
         Page<ClientResponse> dto = service.findAll(pageable);

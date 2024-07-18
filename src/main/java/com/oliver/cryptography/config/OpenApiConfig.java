@@ -17,7 +17,7 @@ public class OpenApiConfig {
                 .info((new Info())
                         .title("RESTFULL API with Java 17 and Spring Boot 3")
                         .version("v1")
-                        .description("Contact book")
+                        .description("Cryptography")
                         .termsOfService("http://oliveira.com.br/cryptography")
                         .license((new License()).name("Apache 2.0")
                                 .url("http://pub.oliveira.com.br/cryptography")));
